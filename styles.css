@@ -1,0 +1,76 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "karla", "Inter";
+    background-color: #0B2434;
+    padding: 20px 30px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: whitesmoke;
+    max-width: 800px;
+    height: 500px;
+    border-radius: 8px;
+    margin-inline: auto;
+    margin-block: 10vh;
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: 900;
+    color:indigo;
+    margin: 0;
+}
+
+h3 {
+    max-width: 500px;
+    line-height: 1.5rem;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.container {
+    display: grid;
+    grid-template: auto auto / repeat(5, 2fr);
+    gap: 20px;
+}
+
+.die-face {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.die-num {
+    font-size: 2rem;
+    font-weight:bolder;
+    color:#0B2434;
+}
+
+.roll-button {
+    width: 120px;
+    height: 45px;
+    border-radius: 7px;
+    border: none;
+    background-color:chartreuse;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color:blueviolet;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.18)
+}
+
+.roll-button:active {
+    box-shadow: inset 0px 0px 0px -1px rgba(0, 0, 0, 0.7);
+}
