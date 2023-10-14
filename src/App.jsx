@@ -11,8 +11,9 @@ function App() {
   const [tenzies, setTenzies] = useState(false)
 
   useEffect(() => {
+    const firstValue = allDice[0].value
     const allHeld = allDice.every(die => die.held)
-    const allSameNum = allDice.every(die => die.value === allDice[0].value)
+    const allSameNum = allDice.every(die => die.value === firstValue)
     if (allHeld && allSameNum) {
       setTenzies(true)
     }
@@ -33,10 +34,9 @@ function App() {
   }
 
   function holdDie(id) {
-    setAllDice(prevDice => prevDice.map(die => {
-      return die.id === id ? { ...die, held: !die.held } : die
-    })
-    )
+    setAllDice(prevDice => prevDice.map(die =>
+      die.id === id ? { ...die, held: !die.held } : die
+    ))
   }
 
   function rollDice() {
@@ -50,9 +50,8 @@ function App() {
     }
   }
 
-  const diceElements = allDice.map(die => {
-    return <Die key={die.id} {...die} hold={() => holdDie(die.id)} />
-  }
+  const diceElements = allDice.map(die =>
+    (<Die key={die.id} {...die} hold={() => holdDie(die.id)} />)
   )
 
   return (
@@ -63,7 +62,7 @@ function App() {
       <section className="container">
         {diceElements}
       </section>
-      <button className="roll-button" onClick={rollDice}>{tenzies ? "Reset" : "Roll"}</button>
+      <button className="roll-button" onClick={rollDice}>{tenzies ? "Play Again" : "Roll"}</button>
     </main>
   )
 }
