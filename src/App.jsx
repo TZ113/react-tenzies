@@ -19,14 +19,14 @@ function App() {
     }
   }, [allDice])
 
-  function getRandomNum() {
+  function getRandomDieValue() {
     return Math.ceil(Math.random() * 6)
   }
 
   function AllNewDice() {
     const newDiceArray = []
     for (let i = 0; i < 10; i++) {
-      const num = getRandomNum()
+      const num = getRandomDieValue()
       const die = { id: i + 1, value: num, held: false }
       newDiceArray.push(die)
     }
@@ -42,7 +42,7 @@ function App() {
   function rollDice() {
     if (!tenzies) {
       setAllDice(prevDice => prevDice.map(die =>
-        die.held ? die : { ...die, value: getRandomNum() }
+        die.held ? die : { ...die, value: getRandomDieValue() }
       ))
     } else {
       setTenzies(false)
