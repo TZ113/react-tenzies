@@ -2,14 +2,14 @@
 import { useWindowSize } from '@uidotdev/usehooks'
 import Confetti from 'react-confetti'
 
-function Die({ value, held, hold }) {
+function Die(props) {
     const styles = {
-        backgroundColor: held ? "dodgerblue" : "whitesmoke"
+        backgroundColor: props.held ? "dodgerblue" : "whitesmoke"
     }
 
     return (
-        <div className="die-face" style={styles} onClick={hold}>
-            <h2 className="die-num">{value}</h2>
+        <div className="die-face" style={styles} onClick={props.hold}>
+            <h2 className="die-num">{props.value}</h2>
         </div>
     )
 }
