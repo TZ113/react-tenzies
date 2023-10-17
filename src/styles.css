@@ -1,0 +1,117 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "karla", "Inter";
+    background-color: #009999;
+    padding: 20px 30px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #ccffff;
+    max-width: 800px;
+    height: 500px;
+    border-radius: 8px;
+    margin-inline: auto;
+    margin-block: 10vh;
+    text-align: center;
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: 900;
+    color:#993399;
+    margin: -20px;
+}
+
+h3 {
+    max-width: 500px;
+    line-height: 1.5rem;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.container {
+    display: grid;
+    grid-template: auto auto / repeat(5, 2fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.dice {
+    width: 50px;
+    height: 50px;
+    border: 3px solid dodgerblue;
+    background-color: #ff6600;
+    position: relative;
+    border-radius: 10px;
+    cursor: pointer;
+    /* box-shadow: 1px  2px 2px 5px rgba(30, 144, 255, 0.18); */
+  } 
+  .dot {
+    width: 10px;
+    height: 10px;
+    background-color: dodgerblue;
+    border-radius: 50%;
+    position: absolute;
+  }
+
+  .die1-dot1 { top: 17px; left: 18px; }
+
+  .die2-dot1 { top: 8px; left: 10px; }
+  .die2-dot2 { top: 26px; left: 24px; }
+
+  .die3-dot1 { top: 5px; left: 7px; }
+  .die3-dot2 { top: 17px; left: 17px; }
+  .die3-dot3 { top: 30px; left: 27px; }
+
+  .die4-dot1 { top: 7px; left: 8px; }
+  .die4-dot2 { top: 7px; left: 26px; }
+  .die4-dot3 { top: 27px; left: 8px; }
+  .die4-dot4 { top: 27px; left: 26px; }
+
+  .die5-dot1 { top: 4px; left: 8px; }
+  .die5-dot2 { top: 4px; left: 26px; }
+  .die5-dot3 { top: 16px; left: 18px; }
+  .die5-dot4 { top: 29px; left: 8px; }
+  .die5-dot5 { top: 29px; left: 26px; }
+
+  .die6-dot1 { top: 4px; left: 8px; }
+  .die6-dot2 { top: 4px; left: 26px; }
+  .die6-dot3 { top: 16px; left: 8px; }
+  .die6-dot4 { top: 16px; left: 26px; }
+  .die6-dot5 { top: 29px; left: 8px; }
+  .die6-dot6 { top: 29px; left: 26px; }
+
+.roll-button {
+    width: 120px;
+    height: 45px;
+    border-radius: 7px;
+    border: none;
+    background-color:chartreuse;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color:blueviolet;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.18)
+}
+
+.roll-button:active {
+    box-shadow: inset 0px 0px 0px -1px rgba(0, 0, 0, 0.7);
+}
+
+.customOverlay {
+    background: rgba(36, 123, 160, 0.7);
+  }
+  .customModal {
+    background: red;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    
+  }
