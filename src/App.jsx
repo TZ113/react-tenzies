@@ -28,7 +28,7 @@ function App() {
 
   const [dice, setDice] = useState(AllNewDice())
   const [tenzies, setTenzies] = useState(false)
-  const [clickCount, setClickCount] = useState(0)
+  const [rollCount, setRollCount] = useState(0)
   const [records, setRecords] = useState(() => JSON.parse(localStorage.getItem("records")) || [])
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const startTimeRef = useRef(null)
@@ -44,25 +44,33 @@ function App() {
     }
   }, [dice])
 
-
   useEffect(() => {
-    if (clickCount === 1) {
+    if (rollCount === 1) {
       startTimeRef.current = new Date()
     }
     if (tenzies) {
       const record = {
-        total_clicks: clickCount,
+        id: nanoid(),
+        total_rolls: rollCount,
         duration: new Date() - startTimeRef.current
       }
       console.log(record)
       setRecords(prevRecords => ([record, ...prevRecords]))
     }
 
-  }, [clickCount, tenzies])
+  }, [rollCount, tenzies])
 
   useEffect(() => {
     localStorage.setItem("records", JSON.stringify(records))
   }, [records])
+
+  useEffect(() => {
+    let timeoutId
+    if (tenzies) {
+      timeoutId = setTimeout(() => { setModalIsOpen(true) }, 3000)
+    }
+    return () => clearTimeout(timeoutId)
+  }, [tenzies])
 
   function getRandomDieValue() {
     return Math.ceil(Math.random() * 6)
@@ -81,7 +89,6 @@ function App() {
     setDice(prevDice => prevDice.map(die =>
       die.id === id ? { ...die, held: !die.held } : die
     ))
-    // setClickCount(prevCount => prevCount + 1)
   }
 
   function rollDice() {
@@ -89,14 +96,31 @@ function App() {
       setDice(prevDice => prevDice.map(die =>
         die.held ? die : { ...die, value: getRandomDieValue() }
       ))
-      setClickCount(prevCount => prevCount + 1)
+      setRollCount(prevCount => prevCount + 1)
     } else {
       setTenzies(false)
       setDice(AllNewDice())
-      setClickCount(0)
-      // setModalIsOpen(true)
+      setRollCount(0)
     }
   }
+
+  function readableDuration(duration) {
+    let minutes = 0
+    let seconds = duration / 1000
+    if (seconds >= 60) {
+      minutes = Math.round(seconds / 60)
+      seconds = seconds % 60
+    }
+
+    return `${minutes} Mins ${seconds.toFixed(2)} Secs`
+  }
+
+  const gameRecords = records.map(record =>
+    <div className="record" key={record.id}>
+      Total rolls: {record.total_rolls} &nbsp; &nbsp; &nbsp;
+      Duration: {readableDuration(record.duration)}
+    </div>
+  )
 
   const diceElements = dice.map(die =>
     (<Die key={die.id} {...die} hold={holdDie} />)
@@ -111,13 +135,12 @@ function App() {
         overlayClassName="customOverlay"
         contentLabel="Stats"
       >
-        <h1 className="modal-heading">Scores</h1>
-        <p className="modal-content">Modal content</p>
+        <h2 className="modal-heading">Scores</h2>
+        <div className="modal-content">{gameRecords}</div>
       </Modal>
-      {/* <button onClick={() => setModalIsOpen(true)}>Open Modal</button> */}
       {tenzies && <RunConfetti />}
-      <h1>TENZI Dice Game</h1>
-      <h3>Press Roll to roll the dice. Click on a die to hold it. If you get all the dice same, you have won!</h3>
+      <h1 className="game-heading">TENZI Dice Game</h1>
+      <h3 className="game-description">Press Roll to roll the dice. Click on a die to hold it. If you get all the dice same, you have won!</h3>
       <section className="container">
         {diceElements}
       </section>
