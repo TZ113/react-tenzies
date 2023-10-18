@@ -1,40 +1,26 @@
-/* eslint-disable no-unused-vars */
-
 import { nanoid } from "nanoid"
 import { useEffect, useRef, useState } from "react"
 import Modal from "react-modal"
 import { Die, RunConfetti } from "./Components"
 
+// Bind the Modal with the app
 Modal.setAppElement("#root")
 
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    border: "2px groove dodgerblue",
-    maxWidth: "500px",
-    width: "100%",
-    borderRadius: "7px",
-    textAlign: "center",
-    backgroundColor: "whitesmoke",
-  },
-}
-
-function App() {
-
+const App = () => {
   const [dice, setDice] = useState(AllNewDice())
   const [tenzies, setTenzies] = useState(false)
+
+  // Track how many rolls it takes to finish the game
   const [rollCount, setRollCount] = useState(0)
+
+  // Retrieve game records from localStorage
+  // Create a new empty array if none
   const [records, setRecords] = useState(() => JSON.parse(localStorage.getItem("records")) || [])
+
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const startTimeRef = useRef(null)
 
-  console.log(records)
-
+  // Check if the game is won
   useEffect(() => {
     const firstValue = dice[0].value
     const allHeld = dice.every(die => die.held)
@@ -44,6 +30,8 @@ function App() {
     }
   }, [dice])
 
+  // Track the number of rolls and duration of each game
+  // Store them in the records state
   useEffect(() => {
     if (rollCount === 1) {
       startTimeRef.current = new Date()
@@ -54,16 +42,17 @@ function App() {
         total_rolls: rollCount,
         duration: new Date() - startTimeRef.current
       }
-      console.log(record)
       setRecords(prevRecords => ([record, ...prevRecords]))
     }
 
   }, [rollCount, tenzies])
 
+  // Store the records in the localStorage
   useEffect(() => {
     localStorage.setItem("records", JSON.stringify(records))
   }, [records])
 
+  // Display the score 3 secs after the game ends
   useEffect(() => {
     let timeoutId
     if (tenzies) {
@@ -72,11 +61,12 @@ function App() {
     return () => clearTimeout(timeoutId)
   }, [tenzies])
 
-  function getRandomDieValue() {
+  const getRandomDieValue = () => {
     return Math.ceil(Math.random() * 6)
   }
 
-  function AllNewDice() {
+  // Create and return a new set of dice
+  const AllNewDice = () => {
     const newDiceArray = []
     for (let i = 0; i < 10; i++) {
       const die = { id: nanoid(), value: getRandomDieValue(), held: false }
@@ -85,26 +75,29 @@ function App() {
     return newDiceArray
   }
 
-  function holdDie(id) {
+  // Change the value of held property of a die when clicked
+  const holdDie = (id) => {
     setDice(prevDice => prevDice.map(die =>
       die.id === id ? { ...die, held: !die.held } : die
     ))
   }
 
-  function rollDice() {
-    if (!tenzies) {
+  // If the game is won start a new one
+  // Else update the dice and rollCount states
+  const rollDice = () => {
+    if (tenzies) {
+      setTenzies(false)
+      setDice(AllNewDice())
+      setRollCount(0)
+    } else {
       setDice(prevDice => prevDice.map(die =>
         die.held ? die : { ...die, value: getRandomDieValue() }
       ))
       setRollCount(prevCount => prevCount + 1)
-    } else {
-      setTenzies(false)
-      setDice(AllNewDice())
-      setRollCount(0)
     }
   }
 
-  function readableDuration(duration) {
+  const readableDuration = (duration) => {
     let minutes = 0
     let seconds = duration / 1000
     if (seconds >= 60) {
@@ -115,6 +108,7 @@ function App() {
     return `${minutes} Mins ${seconds.toFixed(2)} Secs`
   }
 
+  // Create HTML elements for displaying the game records 
   const gameRecords = records.map(record =>
     <div className="record" key={record.id}>
       Total rolls: {record.total_rolls} &nbsp; &nbsp; &nbsp;
@@ -122,12 +116,15 @@ function App() {
     </div>
   )
 
+  // Create JSX elements for rendering the dice
   const diceElements = dice.map(die =>
     (<Die key={die.id} {...die} hold={holdDie} />)
   )
 
   return (
     <main>
+
+      {/* Modal to display the game stats */}
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
@@ -138,7 +135,10 @@ function App() {
         <h2 className="modal-heading">Scores</h2>
         <div className="modal-content">{gameRecords}</div>
       </Modal>
+
+      {/* Display confetti if the game is won */}
       {tenzies && <RunConfetti />}
+
       <h1 className="game-heading">TENZI Dice Game</h1>
       <h3 className="game-description">Press Roll to roll the dice. Click on a die to hold it. If you get all the dice same, you have won!</h3>
       <section className="container">

@@ -1,6 +1,6 @@
+// Dice components
 
-
-function Die1() {
+const Die1 = () => {
     return (
         <>
             <div className="dot die1-dot1"></div>
@@ -8,7 +8,7 @@ function Die1() {
     )
 }
 
-function Die2() {
+const Die2 = () => {
     return (
         <>
             <div className="dot die2-dot1"></div>
@@ -17,7 +17,7 @@ function Die2() {
     )
 }
 
-function Die3() {
+const Die3 = () => {
     return (
         <>
             <div className="dot die3-dot1"></div>
@@ -27,7 +27,7 @@ function Die3() {
     )
 }
 
-function Die4() {
+const Die4 = () => {
     return (
         <>
             <div className="dot die4-dot1"></div>
@@ -38,7 +38,7 @@ function Die4() {
     )
 }
 
-function Die5() {
+const Die5 = () => {
     return (
         <>
             <div className="dot die5-dot1"></div>
@@ -50,7 +50,7 @@ function Die5() {
     )
 }
 
-function Die6() {
+const Die6 = () => {
     return (
         <>
             <div className="dot die6-dot1"></div>

@@ -12,10 +12,15 @@ const diceComponentsMap = {
     6: Die6
 }
 
+// Render individual die
 function Die(props) {
+
+    // Style conditionally based on the value of held prop
     const styles = {
         boxShadow: props.held ? "inset 3px 5px 10px -5px rgba(30, 144, 255, 0.7)" : "3px 3px 7px 3px rgba(0, 20, 255, 0.6)"
     }
+
+    // Create and return a random die based on the value prop
     const RandomDie = diceComponentsMap[props.value] || null
     return (
         <div className='dice' style={styles} onClick={() => props.hold(props.id)}>
@@ -24,6 +29,7 @@ function Die(props) {
     )
 }
 
+// Display confetti
 function RunConfetti() {
     const { width, height } = useWindowSize()
     return (
