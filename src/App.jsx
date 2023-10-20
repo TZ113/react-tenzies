@@ -7,7 +7,22 @@ import { Die, RunConfetti } from "./Components"
 Modal.setAppElement("#root")
 
 const App = () => {
-  const [dice, setDice] = useState(AllNewDice())
+
+  const getRandomDieValue = () => {
+    return Math.ceil(Math.random() * 6)
+  }
+
+  // Create and return a new set of dice
+  const newDiceSet = () => {
+    const newDiceArray = []
+    for (let i = 0; i < 10; i++) {
+      const die = { id: nanoid(), value: getRandomDieValue(), held: false }
+      newDiceArray.push(die)
+    }
+    return newDiceArray
+  }
+
+  const [dice, setDice] = useState(newDiceSet())
   const [tenzies, setTenzies] = useState(false)
 
   // Track how many rolls it takes to finish the game
@@ -61,19 +76,7 @@ const App = () => {
     return () => clearTimeout(timeoutId)
   }, [tenzies])
 
-  const getRandomDieValue = () => {
-    return Math.ceil(Math.random() * 6)
-  }
 
-  // Create and return a new set of dice
-  const AllNewDice = () => {
-    const newDiceArray = []
-    for (let i = 0; i < 10; i++) {
-      const die = { id: nanoid(), value: getRandomDieValue(), held: false }
-      newDiceArray.push(die)
-    }
-    return newDiceArray
-  }
 
   // Change the value of held property of a die when clicked
   const holdDie = (id) => {
@@ -87,7 +90,7 @@ const App = () => {
   const rollDice = () => {
     if (tenzies) {
       setTenzies(false)
-      setDice(AllNewDice())
+      setDice(newDiceSet())
       setRollCount(0)
     } else {
       setDice(prevDice => prevDice.map(die =>
