@@ -8,6 +8,13 @@ body {
     padding: 20px 30px;
 }
 
+@media (max-width: 460px) {
+    body {
+        margin: 0;
+        padding: 0;
+    }
+}
+
 main {
     font-family: "karla", "Inter";
     display: flex;
@@ -21,16 +28,34 @@ main {
     margin-inline: auto;
     margin-block: 10vh;
     text-align: center;
+    overflow: auto;
 }
 
-h1 {
+@media (max-width: 460px) {
+    main {
+        height: 100vh;
+        width: 100vw;
+        margin: 0px;
+    }
+}
+
+
+
+.game-heading{
     font-size: 3rem;
     font-weight: 900;
     color:#993399;
     margin: -20px;
 }
 
-h3 {
+@media (max-width: 460px) {
+    .game-heading {
+        margin: 0;
+        font-size: 2.5rem;
+    }
+}
+
+.game-description {
     max-width: 500px;
     line-height: 1.5rem;
     letter-spacing: 1px;
@@ -44,6 +69,13 @@ h3 {
     margin-top: 20px;
 }
 
+@media (max-width:460px) {
+    .container {
+        grid-template: auto auto auto /repeat(4, 2fr);
+        margin: 20px 0px;
+    }
+}
+
 .dice {
     width: 50px;
     height: 50px;
@@ -52,7 +84,6 @@ h3 {
     position: relative;
     border-radius: 10px;
     cursor: pointer;
-    /* box-shadow: 1px  2px 2px 5px rgba(30, 144, 255, 0.18); */
   } 
   .dot {
     width: 10px;
@@ -139,7 +170,6 @@ h3 {
 }
 
 .modal-heading {
-    /* font-size: large; */
     margin-top: 0;
     margin-bottom: 20px;
     color: saddlebrown;
@@ -149,11 +179,21 @@ h3 {
     border: 2px solid saddlebrown;
     padding: 20px;
     width:fit-content;
-    text-align: left;
+    text-align: center;
     margin: auto;
     border-radius: 5px;
 }
 
-.record {
+th {
+    text-align: center;
+    border-bottom: 1px solid darkblue;
+
+}
+tr {
     margin: 10px;
+}
+
+td {
+    border: none;
+    padding: 5px;
 }

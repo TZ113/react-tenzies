@@ -55,7 +55,8 @@ const App = () => {
       const record = {
         id: nanoid(),
         total_rolls: rollCount,
-        duration: new Date() - startTimeRef.current
+        duration: new Date() - startTimeRef.current,
+        timeStamp: new Date()
       }
       setRecords(prevRecords => ([record, ...prevRecords]))
     }
@@ -111,13 +112,26 @@ const App = () => {
     return `${minutes} Mins ${seconds.toFixed(2)} Secs`
   }
 
+  const getTimeString = (timeStamp) => {
+    const time = new Date(timeStamp)
+    const year = time.getFullYear()
+    const month = time.getMonth() + 1
+    const date = time.getDate()
+    const hours = time.getHours()
+    const minutes = time.getMinutes()
+    const seconds = time.getSeconds()
+
+    return `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`
+  }
+
   // Create HTML elements for displaying the game records 
-  const gameRecords = records.map(record =>
-    <div className="record" key={record.id}>
-      Total rolls: {record.total_rolls} &nbsp; &nbsp; &nbsp;
-      Duration: {readableDuration(record.duration)}
-    </div>
-  )
+  const gameRecords = records.map(record => {
+    return (<tr className="record" key={record.id}>
+      <td>{record.total_rolls}</td>
+      <td>{readableDuration(record.duration)}</td>
+      <td>{getTimeString(record.timeStamp)}</td>
+    </tr>)
+  })
 
   // Create JSX elements for rendering the dice
   const diceElements = dice.map(die =>
@@ -126,7 +140,6 @@ const App = () => {
 
   return (
     <main>
-
       {/* Modal to display the game stats */}
       <Modal
         isOpen={modalIsOpen}
@@ -136,7 +149,18 @@ const App = () => {
         contentLabel="Stats"
       >
         <h2 className="modal-heading">Scores</h2>
-        <div className="modal-content">{gameRecords}</div>
+        <table className="modal-content">
+          <thead>
+            <tr>
+              <th>Total rolls</th>
+              <th>Duration</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            {gameRecords}
+          </tbody>
+        </table>
       </Modal>
 
       {/* Display confetti if the game is won */}
@@ -147,6 +171,7 @@ const App = () => {
       <section className="container">
         {diceElements}
       </section>
+      {/* Button with text rendered based on game status */}
       <button className="roll-button" onClick={rollDice}>{tenzies ? "Play Again" : "Roll"}</button>
     </main>
   )
