@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useWindowSize } from '@uidotdev/usehooks'
+import PropTypes from "prop-types"
 import Confetti from 'react-confetti'
 import { Die1, Die2, Die3, Die4, Die5, Die6 } from "./DiceComponents"
 
@@ -17,7 +18,10 @@ function Die(props) {
 
     // Style conditionally based on the value of held prop
     const styles = {
-        boxShadow: props.held ? "inset 3px 5px 10px -5px rgba(30, 144, 255, 0.7)" : "3px 3px 7px 3px rgba(0, 20, 255, 0.6)"
+        boxShadow:
+            props.held ?
+                "inset 3px 5px 10px -5px rgba(30, 144, 255, 0.7)" :
+                "3px 3px 7px 3px rgba(0, 20, 255, 0.6)"
     }
 
     // Create and return a random die based on the value prop
@@ -38,6 +42,11 @@ function RunConfetti() {
             height={height}
         />
     )
+}
+
+Die.propTypes = {
+    hold: PropTypes.func.isRequired,
+    value: PropTypes.number.isRequired
 }
 
 export { Die, RunConfetti }

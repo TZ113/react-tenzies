@@ -167,7 +167,7 @@ const App = () => {
       {tenzies && <RunConfetti />}
 
       <h1 className="game-heading">TENZI Dice Game</h1>
-      <h3 className="game-description">Press Roll to roll the dice. Click on a die to hold it. If you get all the dice same, you have won!</h3>
+      <h3 className="game-description">Click on a die to hold or release it. Press the roll button to roll all the unheld dice. When all of the dice are the same (for example, all are either one or two or any of the six), you have won!</h3>
       <section className="container">
         {diceElements}
       </section>
